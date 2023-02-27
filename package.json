@@ -1,16 +1,38 @@
 {
-  "name": "nobleedingi118",
-  "version": "1.0.2",
+  "name": "nobleedingtr",
   "description": "Internationalization without bleeding on JS and TypeScript projects!",
-  "main": "index.js",
+  "version": "1.0.2",
+  "type": "module",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist",
+    "build": "npm run clean ; tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raminkhatami/nobleedingtr.git"
   },
   "keywords": [
     "internationalization",
-    "ltr",
-    "rtl"
+    "intl",
+    "i18n",
+    "locale",
+    "localization",
+    "rtl",
+    "right-to-left",
+    "persian",
+    "arabic",
+    "hebrew",
+    "japanese",
+    "thai",
+    "english"
   ],
   "author": "Ramin Khatami",
-  "license": "ISC"
+  "license": "ISC",
+  "homepage": "https://github.com/raminkhatami/nobleedingtr",
+  "devDependencies": {
+    "@types/node": "^18.14.2",
+    "typescript": "^4.9.5"
+  }
 }
