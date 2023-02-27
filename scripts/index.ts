@@ -130,7 +130,6 @@ const _readObject = (
       }
     }
   }
-  console.log(obj)
   return obj
 }
 
