@@ -34,10 +34,6 @@ console.log(tr.youWillBe$YearsOld$MonthFromNow("31","two"))
 //to any language you like: for example Japanese and place the contents in 
 //ja.locale  and uncomment tr._locale at the top of the code.
 
-
-//there are two special varaible inside tr and both are set with underbar tr._locale and tr._writeLocale
-//setting tr._writeLocale to boolean false prevents furthure writing of default to the file system.
-
 ```
 
 ## Guide
