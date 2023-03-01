@@ -15,6 +15,8 @@ The way this package work is that during the coding you write whatever you like 
 //import package
 import tr from "nobleedingtr"
 
+// tr._locale = "ja" // uncomment this after you are done with translating
+
 // Write your code and start using your text as camel case member of tr object without defining it anywhere in your code.
 
 
@@ -24,12 +26,14 @@ console.log(tr.expiryDateIsTwoMonthAfterOpenning)
 //↑ prints---> expiry dateI is two month after openning
 console.log(tr.youAre$YearsOld("31")) 
 //↑ prints--->you are 31 years old
-
 console.log(tr.youWillBe$YearsOld$MonthFromNow("31","two")) 
 //↑ prints---> you will be 31 years old two month from now.
 
-//the above code defines 4 variables at /locaels/default.locale during developement. Once you are done with developement translate default.locale to any language you like: for example Japanese and place the contents in ja.locale  and later set tr._locale at the top of your code.
-tr._locale = "ja"
+//the above code defines 4 variables at /locaels/default.locale during 
+//developement. Once you are done with developement translate default.locale
+//to any language you like: for example Japanese and place the contents in 
+//ja.locale  and uncomment tr._locale at the top of the code.
+
 
 //there are two special varaible inside tr and both are set with underbar tr._locale and tr._writeLocale
 //setting tr._writeLocale to boolean false prevents furthure writing of default to the file system.
@@ -48,7 +52,7 @@ for example:
 
 or
 
-- **youAreTheBestDoctor** becomes: **you are the best the docter**
+- **youAreTheBestDoctor** becomes: **you are the best docter**
 
 once your are done with your program you can go to `/locales/default.locale` and translate the content to the language of your choice and place it inside `/locales/language_code.locale` and set `tr._locale = "language_code"` and enjoy your app.
 

@@ -1,7 +1,7 @@
 {
   "name": "nobleedingtr",
   "description": "Internationalization without bleeding on JS and TypeScript projects!",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
