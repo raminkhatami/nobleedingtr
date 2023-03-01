@@ -1,10 +1,13 @@
 # No Bleeding Tranlation
 
-This package provides internationalization without bleeding! having non roman (Japanese, Thai,...) and/or RTL language support in mind!
+This package provides a utility to do internationalization without much effert! having non Roman language like Japanese, Thai,... and/or RTL language support in mind!
+
 
 ## Background
 
-it is very trouble some to mix non english language text inside js code and it was so much trouble to use common internatinalization app to use for small projects. So I decided to make a small package to address this isseu.
+It is very difficult to write non-English language texts inside JS codes and too much work is involved to use availabke internatinalization modules for small projects.  This package is a small module to address above isseu in a simple format.
+
+The way this package work is that during the coding you write whatever you like in english as object members in camelcase and it appears as it is in your app and it creates a default.locale file in locales directory at root of your app. Once you are done with developement, you grab the content of default.locale, translate it to the language of your choice and place it right beside default.locale at locales directory (such as ja.locale ) and set tr._locale to the name of that file. 
 
 ## TLDR Documentation
 
@@ -12,22 +15,20 @@ it is very trouble some to mix non english language text inside js code and it w
 //import package
 import tr from "nobleedingtr"
 
-// Write your code and start using your text as camel case member of tr object without defining it.
+// Write your code and start using your text as camel case member of tr object without defining it anywhere in your code.
 
 
 console.log(tr.whyYouAreNotCarefull)
-//above prints---> why you are not carefull
-
+//↑ prints---> why you are not carefull
 console.log(tr.expiryDateIsTwoMonthAfterOpenning)
-//above prints---> expiry dateI is two month after openning
-
+//↑ prints---> expiry dateI is two month after openning
 console.log(tr.youAre$YearsOld("31")) 
-//above prints--->you are 31 years old
+//↑ prints--->you are 31 years old
 
 console.log(tr.youWillBe$YearsOld$MonthFromNow("31","two")) 
-//above prints---> you will be 31 years old two month from now.
+//↑ prints---> you will be 31 years old two month from now.
 
-//the above code defines 4 variables in /locaels/default.locale during developement.once you are done wit developement translate default.locale to any language you like: for example Japanese and place the contents in ja.locale. and later set 
+//the above code defines 4 variables at /locaels/default.locale during developement. Once you are done with developement translate default.locale to any language you like: for example Japanese and place the contents in ja.locale  and later set tr._locale at the top of your code.
 tr._locale = "ja"
 
 //there are two special varaible inside tr and both are set with underbar tr._locale and tr._writeLocale
@@ -37,7 +38,7 @@ tr._locale = "ja"
 
 ## Guide
 
-You can easily internationalize your app witout much effort.
+You can easily internationalize your app without much effort.
 
 you can place `tr.(any variable name you like in camel case)` inside your code and it appears as uncamel case of the same variable inside your app without doing anytging.
 
@@ -54,6 +55,11 @@ once your are done with your program you can go to `/locales/default.locale` and
 ### Usage
 
 1. Install this package by your package manager (npm, yarn, pnpm,...)
+
+```bash
+npm install nobleedingtr
+```
+
 2. Load this package default object into your project.
 
 ```js
