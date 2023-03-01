@@ -40,7 +40,7 @@ console.log(tr.youWillBe$YearsOld$MonthFromNow("31","two"))
 
 You can easily internationalize your app without much effort.
 
-you can place `tr.(any variable name you like in camel case)` inside your code and it appears as uncamel case of the same variable inside your app without doing anytging.
+You can place `tr.(any variable name you like in camel case)` inside your code and it appears as uncamel case of the same variable inside your app without doing anytging.
 
 for example:
 
@@ -64,11 +64,15 @@ npm install nobleedingtr
 
 ```js
 import tr from "nobleedingtr"
-//or in commonjs apps
+```
+
+Or if you use commonjs
+
+```js
 const tr = require("nobleedingtr")
 ```
 
-3. Start using it!
+1. Start using it!
 
 You can then start treating  `tr` as an object and add your text by adding it as a camel case object member to it.
 
@@ -80,12 +84,12 @@ console.log(tr.helloWorld)
 let myVar = tr.greetingMessage 
 ```
 
-`
-Remember you do not need (cannot) set variable name inside your code!
-so for example ~~tr.variableName="some translation"~~ is  not accpeted!
-`
 
-you can even use this package in React, ReactJS or Svelte project. for example in svelte
+> Remember you do not need (cannot) set variable name inside your code!
+so for example ~~ tr.variableName='some translation'~~ is  not accpeted!
+
+
+You can use this package any node enabled environment such as React, ReactNative, Svelte, or SvelteKit project. for example in SvelteKit project:
 
 ```svelte
 <script>
@@ -99,13 +103,13 @@ import tr from "nobleedingtr"
 
 ```
 
-the only requiremnt is that your apps developement is done in nodejs so that the locale file can be saved and read from disk during developement.
+The only requiremnt is that your apps developement is done in nodejs so that the locale file can be saved and read from disk during developement.
 
 ### Advanced Usage
 
 **You can treat tr object as function and pass variable to them!**
 
-the requirement is you need to have dollar sign: $ as variable place holder inside your object member name.
+The requirement is you need to have dollar sign: $ as a variable placeholder inside your object member name.
 
 for example
 
@@ -113,7 +117,7 @@ for example
 let a = tr.hello$welcomeToOurPage("Jack")
 ```
 
-the above item gets saved to `default.locale` as :
+The above item gets saved to `default.locale` as :
 
 ```txt
 @hello$welcomeToOurPage = 
@@ -121,7 +125,7 @@ hello $ welcome to our page
 
 ```
 
-the $ characters are placeholders for variables you want to pass to the  tr object members. so that for example you can translate the above sentence in de.locale as below
+The $ characters are placeholders for variables you want to pass to the  tr object members. For example you can translate the above sentence in de.locale as below
 
 ```txt
 //de.locale
@@ -130,13 +134,13 @@ hallo $! willkommen auf unserer Seite
 
 ```
 
-and you can call it in your js code as `tr.hello$welcomeToOurPage("Daniel")` and it becomes `hallo Daniel! willkommen auf unserer Seite` in your app.
+And you can call it in your js code as `tr.hello$welcomeToOurPage("Daniel")` and it becomes `hallo Daniel! willkommen auf unserer Seite` in your app.
 
 You can use as many $ as place holder inside your variable and use it as you wish.
 
 ### Numbering the Arguements
 
-There are cases that variable name and the translated variable location differs. In those cases, you can number your variable inside the translation by adding a number without space to the dollar sign. for instance:
+There are cases that variable name and the translated variable location differs. In those cases, you can number your variable inside the translation by adding a number without space to the dollar sign. For instance:
 
 ```txt
 //fa.locale
@@ -145,7 +149,7 @@ There are cases that variable name and the translated variable location differs.
 سلام «$1». به سایت ما برای «$2» بار خوش آمدید.
 ```
 
-can be called your in your code as below:
+Can be called your in your code as below:
 
 ```js
 let name = "مجتبی"
@@ -153,21 +157,40 @@ let time = "سومین"
 tr.hello$welcomeToOurPageForThe$times(name,time)
 ```
 
-The `name` replaces `$1` and the `time` replaces `$2`.
+The `name` replaces `$1` and the `time` replaces `$2` and shows:
 
-Remember the package will not complain if you less or more than the required variables in your translation and it shows dollar sign instead!
+```txt
+سلام «مجتبی». به سایت ما برای «سومین» بار خوش آمدید.
+```
 
-so that for example if you call the above code as below
+Remember the package will not complain if you pass less/more than the required variable in your translation and it only shows dollar sign instead!
+
+So that for example if you call the above code as below
 
 ```js
 let name = "مجتبی"
 tr.hello$welcomeToOurPageForThe$times(name)
 ```
 
-it shows as
+It shows as
 
 ```txt
 سلام «مجتبی». به سایت ما برای «$2» بار خوش آمدید.
+```
+
+Or if you call it:
+
+```js
+let name = "مجتبی"
+let time = "سومین"
+let additional = "چرا"
+tr.hello$welcomeToOurPageForThe$times(name,time, additional)
+```
+
+It still shows:
+
+```txt
+سلام «مجتبی». به سایت ما برای «سومین» بار خوش آمدید.
 ```
 
 ## Default setting
@@ -179,15 +202,15 @@ so for example `tr.helloWorld` becomes:
 ```txt
 @helloWorld= 
 hello world
+
+
 ```
 
 inside `default.locale` file.
 
 ---
 
-You can then easily grab the content of `default.locale` file and translate it to any other language you want and save it as the code for language  inside  the locale directory (i.e jp.locale, de.locale, fa.locale).
-
-to use the localized version of the file you should set `tr._locale = "language_code"` . just remember the lanuage code must match the name of the localized locale file inside locales directory:
+remember the lanuage code you set on `tr._locale` variable, must match the name of the localized file inside locales directory:
 
 ```javascript
 //for example
@@ -195,17 +218,32 @@ tr._locale = "fa"
 //grabs the content of file from /locales/fa.locale 
 ```
 
-if you set the `tr._locale` and start adding members that do not exist in locale version, the new members gets added to default.locale and  unlocalized version starts apearing in your app.
+If you set the `tr._locale` and start adding members that do not exist in locale version, the new members gets added to default.locale and  unlocalized version starts apearing in your app.
 
 ## Design Consideration
 
 - **@ character behind variable name**
   
-  It is there so that you can easily copy paste the file content to translate service such as google and prevent translate engine from translating the variable name as they think it is a email address etc..
+  It is there so that you can easily copy paste the file content to translate service such as google and prevent translate engine from translating the variable name as they treat them as email address etc..
 
 - **The locale file format**
 
-  the variable is written on one line and the content is written below it to make it easy to read and write specially for  Right-to-Left (RTL) languages (Persian, Arabic, Hebrew) working in unsupported text editors!
+  the variable is written on one line and the content is written below it to make it easy to read and write specially for  Right-to-Left (RTL) languages (Persian, Arabic, Hebrew) working in unsupported text editors! 
+  
+  There is always two line distance between last line of the translation text and the next variable
+
+  ```txt
+  @oneVariable= 
+  some translation
+  
+  more translation  for the above variable
+
+
+ @anotherVariable=
+   some translation for another variable
+  
+  more translation  for the another variable
+```
 
   **locale file format**
     1. Each variable after two  new line (or no new line if at the begining of the file) starting with `@` sign and then variable name (in camel case format) and ending with `=`

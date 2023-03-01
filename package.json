@@ -1,7 +1,7 @@
 {
   "name": "nobleedingtr",
   "description": "Internationalization without bleeding on JS and TypeScript projects!",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
@@ -27,7 +27,9 @@
     "hebrew",
     "japanese",
     "thai",
-    "english"
+    "english",
+    "react",
+    "svelte"
   ],
   "author": "Ramin Khatami",
   "license": "ISC",

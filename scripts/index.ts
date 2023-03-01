@@ -105,7 +105,7 @@ const _readObject = (
 ) => {
   const obj = {}
 
-  const regexp = /(\n?\s*\n?\s*|^)?@([\w\$]+)\s*=\s*\n([\s\S]+?)(\n\n?\n?|$)/g
+  const regexp = /(\n?\s*\n?\s*|^)?@([\w\$]+)\s*=\s*\n([\s\S]+?)(\n\n\n?|$)/g
   let txt = ""
   if (_isNode()) {
     const appDir = path.resolve(rootPath)
