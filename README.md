@@ -2,12 +2,11 @@
 
 This package provides a utility to do internationalization without much effert! having non Roman language like Japanese, Thai,... and/or RTL language support in mind!
 
-
 ## Background
 
 It is very difficult to write non-English language texts inside JS codes and too much work is involved to use availabke internatinalization modules for small projects.  This package is a small module to address above isseu in a simple format.
 
-The way this package work is that during the coding you write whatever you like in english as object members in camelcase and it appears as it is in your app and it creates a default.locale file in locales directory at root of your app. Once you are done with developement, you grab the content of default.locale, translate it to the language of your choice and place it right beside default.locale at locales directory (such as ja.locale ) and set tr._locale to the name of that file. 
+The way this package works is that during the developement you write whatever you like in camel cased English words and attach it as the package tr object members it creates a default.locale file in locales directory at root of your app and keep updating it. Once you are done with developement, you grab the content of default.locale file, translate it to the language of your choice and place it right beside default.locale at locales directory (such as ja.locale ) and set tr._locale to the name of that file at top of the program .
 
 ## TLDR Documentation
 
@@ -38,19 +37,17 @@ console.log(tr.youWillBe$YearsOld$MonthFromNow("31","two"))
 
 ## Guide
 
-You can easily internationalize your app without much effort.
-
-You can place `tr.(any variable name you like in camel case)` inside your code and it appears as uncamel case of the same variable inside your app without doing anytging.
+Place `tr.(any variable name you like in camel case)` inside your code without defining it anywhere and it appears as uncamelled case string.
 
 for example:
 
-- **helloWorld** becomes **hello world**
+- **tr.helloWorld** becomes **hello world**
 
 or
 
-- **youAreTheBestDoctor** becomes: **you are the best docter**
+- **tr.youAreTheBestDoctor** becomes: **you are the best docter**
 
-once your are done with your program you can go to `/locales/default.locale` and translate the content to the language of your choice and place it inside `/locales/language_code.locale` and set `tr._locale = "language_code"` and enjoy your app.
+Once your are done with your coding you can go to `/locales/default.locale` and translate the content to the language of your choice and place it inside `/locales/language_code.locale` and set `tr._locale = "language_code"` and enjoy your app.
 
 ### Usage
 
@@ -84,10 +81,8 @@ console.log(tr.helloWorld)
 let myVar = tr.greetingMessage 
 ```
 
-
 > Remember you do not need (cannot) set variable name inside your code!
 so for example ~~ tr.variableName='some translation'~~ is  not accpeted!
-
 
 You can use this package any node enabled environment such as React, ReactNative, Svelte, or SvelteKit project. for example in SvelteKit project:
 
@@ -197,7 +192,7 @@ It still shows:
 
 By default this package create a directory named `locale` at top directory of your project (where your package.json file is located) and put `default.locale` which includes each of the object members as variable and uncameled variable as it's value!
 
-so for example `tr.helloWorld` becomes:
+So for example `tr.helloWorld` becomes:
 
 ```txt
 @helloWorld= 
@@ -218,9 +213,11 @@ tr._locale = "fa"
 //grabs the content of file from /locales/fa.locale 
 ```
 
-If you set the `tr._locale` and start adding members that do not exist in locale version, the new members gets added to default.locale and  unlocalized version starts apearing in your app.
+### Notice
 
-## Design Consideration
+  *If you set the* `tr._locale` *and start adding members that do not exist in locale version, the new members gets added to default.locale file and unlocalized uncamelled case starts apearing in your app untill you add them to the locale file.*
+
+## Design Considerations
 
 - **@ character behind variable name**
   
@@ -228,32 +225,35 @@ If you set the `tr._locale` and start adding members that do not exist in locale
 
 - **The locale file format**
 
-  the variable is written on one line and the content is written below it to make it easy to read and write specially for  Right-to-Left (RTL) languages (Persian, Arabic, Hebrew) working in unsupported text editors! 
+the variable is written on one line and the content is written below it to make it easy to read and write specially for  Right-to-Left (RTL) languages (Persian, Arabic, Hebrew) working in unsupported text editors!
   
-  There is always two line distance between last line of the translation text and the next variable
+There is always two line distance between last line of the translation text and the next variable
 
-  ```txt
-  @oneVariable= 
-  some translation
+```txt
+@oneVariable= 
+some translation
+
+still more translation for the above variable
+
+
+@anotherVariable=
+some translation for another variable
   
-  more translation  for the above variable
-
-
- @anotherVariable=
-   some translation for another variable
-  
-  more translation  for the another variable
+more translation  for the another variable
 ```
 
-  **locale file format**
-    1. Each variable after two  new line (or no new line if at the begining of the file) starting with `@` sign and then variable name (in camel case format) and ending with `=`
-    2. Each translation in a new line immediately after `=`
+- **locale file format**
 
-- Small Apps
+1. Each variable after two  new line (or no new line if at the begining of the file) starting with `@` sign and then variable name (in camel case format) and ending with `=`
 
-   I found it so trouble some to localize a small apps with conventianal internationalization packages.
-   1. you needed to master a translation package
-   2. you needed to follow the strict convention
-   3. you could not pass variable and all contetn should have been either static or you needed to do lots of work to pass a signle variable.
+2. Each translation in a new line immediately after `=`
 
-    Altough this package is not for a large app it made my life so easy for creation of small-to-medium size (PoC) apps and I could quickly internationalize it.
+- **Small Apps**
+
+It is so troublesome to localize a small apps with conventianal internationalization packages.
+
+ 1. One needs to master the translation package
+ 2. One needs to follow the strict convention of the package
+ 3. Passing variable in most packages are not allowed, so all contents should be either static or it needs lots of work to pass a single variable.
+
+  Altough this package is not for a large app creation it made my life much easier for creation of small (PoC) apps.
