@@ -61,9 +61,11 @@ const _writeObject = (
     const rPath = path.join(appDir, localeDirName)
 
     if (!fs.existsSync(rPath)) {
-      fs.mkdir(rPath, { recursive: true }, (err) => {
-        if (err) console.log(err)
-      })
+      try {
+        fs.mkdirSync(rPath, { recursive: true })  
+      } catch (err) {
+        console.log(err)
+      }
     }
 
     let textToWrite = ""
