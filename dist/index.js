@@ -44,10 +44,12 @@ const _writeObject = (obj, locale = "default", rootPath = "./", localeDirName = 
         const appDir = path.resolve(rootPath);
         const rPath = path.join(appDir, localeDirName);
         if (!fs.existsSync(rPath)) {
-            fs.mkdir(rPath, { recursive: true }, (err) => {
-                if (err)
-                    console.log(err);
-            });
+            try {
+                fs.mkdirSync(rPath, { recursive: true });
+            }
+            catch (err) {
+                console.log(err);
+            }
         }
         let textToWrite = "";
         for (const key in writableObj) {
