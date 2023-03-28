@@ -111,12 +111,15 @@ const _readObject = (
   localeDirName = "locales"
 ) => {
   const obj = {}
-
+  
   const regexp = /(\n?\s*\n?\s*|^)?@([\w\$]+)\s*=\s*\n([\s\S]+?)(\n(\n\n)|$)/g
   let txt = ""
   if (_isNode()) {
     const appDir = path.resolve(rootPath)
     const rPath = path.join(appDir, localeDirName)
+    if (!fs.existsSync(rPath)) {
+      return {}
+    }
     txt = fs.readFileSync(path.join(rPath, locale + ".locale"), {
       encoding: "utf-8",
       flag: "r",
