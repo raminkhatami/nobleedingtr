@@ -97,8 +97,10 @@ const _modificationDate = (
   if (_isNode()) {
     const appDir = path.resolve(rootPath)
     const rPath = path.join(appDir, localeDirName)
-    const stats = fs.statSync(path.join(rPath, locale + ".locale"))
-    lmf = stats.mtime
+    if (fs.existsSync(path.join(rPath, locale + ".locale"))) {
+      const stats = fs.statSync(path.join(rPath, locale + ".locale"))
+      lmf = stats.mtime
+    }
   } else {
     throw "this is not server! nobleeding tr works on node!"
   }
@@ -117,7 +119,7 @@ const _readObject = (
   if (_isNode()) {
     const appDir = path.resolve(rootPath)
     const rPath = path.join(appDir, localeDirName)
-    if (!fs.existsSync(rPath)) {
+    if (!fs.existsSync(path.join(rPath, locale + ".locale"))) {
       return {}
     }
     txt = fs.readFileSync(path.join(rPath, locale + ".locale"), {
