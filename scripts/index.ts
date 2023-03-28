@@ -74,28 +74,35 @@ const _writeObject = (
         key !== "length" &&
         key !== "inspect"
       ) {
-        textToWrite += `@${key}=\n ${writableObj[key]}\n\n\n`
+        textToWrite += `@${key}=\n${writableObj[key]}\n\n\n`
       }
     }
     try {
-      fs.writeFile(
-        path.join(rPath, locale + ".locale"),
-        textToWrite,
-        function (err) {
-          if (err) {
-            console.log(err)
-          } else if (_intialSave) {
-            console.log("save your additional locale file to ", rootPath)
-            _intialSave = false
-          }
-        }
-      )
+      fs.writeFileSync(path.join(rPath, locale + ".locale"), textToWrite)
     } catch (err) {
       console.log(err)
     }
   } else {
     throw "can not write to file in non Node environment!"
   }
+}
+let lastModifiedDate: Date
+
+const _modificationDate = (
+  locale = "default",
+  rootPath = "./",
+  localeDirName = "locales"
+) => {
+  let lmf: Date | undefined = undefined
+  if (_isNode()) {
+    const appDir = path.resolve(rootPath)
+    const rPath = path.join(appDir, localeDirName)
+    const stats = fs.statSync(path.join(rPath, locale + ".locale"))
+    lmf = stats.mtime
+  } else {
+    throw "this is not server! nobleeding tr works on node!"
+  }
+  return lmf
 }
 
 const _readObject = (
@@ -105,7 +112,7 @@ const _readObject = (
 ) => {
   const obj = {}
 
-  const regexp = /(\n?\s*\n?\s*|^)?@([\w\$]+)\s*=\s*\n([\s\S]+?)(\n\n\n?|$)/g
+  const regexp = /(\n?\s*\n?\s*|^)?@([\w\$]+)\s*=\s*\n([\s\S]+?)(\n(\n\n)|$)/g
   let txt = ""
   if (_isNode()) {
     const appDir = path.resolve(rootPath)
@@ -135,7 +142,22 @@ const _readObject = (
 
 const _handler = {
   get(target, prop) {
-    
+    if (
+      prop != "_locale" &&
+      lastModifiedDate !== _modificationDate(target["_locale"])
+    ) {
+      const locale = target["_locale"]
+      const newTarget = {
+        _locale: locale,
+        _writeLocale: true,
+        ..._readObject(locale),
+      }
+
+      for (let key in newTarget) {
+        target[key] = newTarget[key]
+      }
+    }
+
     if (!(prop in target) && typeof prop === "string") {
       if (/.*\$.*/.test(prop)) {
         target[prop] = function () {
@@ -167,6 +189,7 @@ const _handler = {
           for (let key in newTarget) {
             target[key] = newTarget[key]
           }
+
           return true
           break
         case "_writeLocale":
@@ -181,6 +204,12 @@ const _handler = {
     }
   },
 }
-const _rawObj = { _locale: "default", _writeLocale: true }
+const _rawObj = {
+  _locale: "default",
+  _writeLocale: true,
+  ..._readObject("default"),
+}
+
+lastModifiedDate = _modificationDate("default", "./", "locales")
 const tr = new Proxy(_rawObj, _handler)
 export default tr
